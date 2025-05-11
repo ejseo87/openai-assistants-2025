@@ -77,12 +77,17 @@ def save_to_text(inputs):
     filename = inputs["filename"]
     content = inputs["content"]
 
-    # Create a temporary file
+    # Ensure filename has .txt extension
     if not filename.endswith('.txt'):
         filename += '.txt'
-    file_path = os.path.join(FILE_DIR, filename)
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write(content)
+
+    # Create download button using Streamlit without saving to disk
+    st.download_button(
+        label=f"Download {filename}",
+        data=content,
+        file_name=filename,
+        mime="text/plain"
+    )
 
     return f"Content has been prepared for download as {filename}"
 
@@ -274,6 +279,8 @@ if openai_api_key:
           After the above resarch, you shoud combine information from Wikipedia searches, DuckDuckGo searches, and any relevant websites you find. Ensure that the final answer is well-organized and detailed, and include citations with links (URLs) for all sources used.
 
           Finally your research must be saved to a .txt file and download it. You must use the function tool named save_to_text, and the content should match the detailed findings provided. Ensure that the final .txt file contains detailed information, all relevant sources, and citations.
+
+          Do NOT make a download link and do NOT use sandbox.
           """,
                     model="gpt-4o-mini",
                     tools=functions,
