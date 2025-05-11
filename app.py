@@ -8,10 +8,10 @@ from langchain.tools import WikipediaQueryRun
 from typing_extensions import override
 from openai import AssistantEventHandler
 import streamlit as st
-# import os
+import os
 
 # Set user agent for web scraping
-# os.environ["USER_AGENT"] = "ResearchAssistant/1.0 (https://github.com/ejseo87/openai-assistants-2025; research@example.com) Python/3.11"
+os.environ["USER_AGENT"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
 
 
 class AssistantEventHandler(AssistantEventHandler):
@@ -153,7 +153,7 @@ functions = [
         "type": "function",
         "function": {
             "name": "save_to_text",
-            "description": "Use this tool to save the content as a .txt file.",
+            "description": "Use this tool to save the content as a .txt file and download it.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -274,9 +274,7 @@ if openai_api_key:
 
           After the above resarch, you shoud combine information from Wikipedia searches, DuckDuckGo searches, and any relevant websites you find. Ensure that the final answer is well-organized and detailed, and include citations with links (URLs) for all sources used.
 
-          Finally your research must be saved to a .txt file. You must use the function tool named save_to_text, and the content should match the detailed findings provided. Make sure to include all sources and relevant information.
-
-          Ensure that the final .txt file contains detailed information, all relevant sources, and citations.
+          Finally your research must be saved to a .txt file and download it. You must use the function tool named save_to_text, and the content should match the detailed findings provided. Ensure that the final .txt file contains detailed information, all relevant sources, and citations.
           """,
                     model="gpt-4o-mini",
                     tools=functions,
