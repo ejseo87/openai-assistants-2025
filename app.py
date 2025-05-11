@@ -278,7 +278,7 @@ if openai_api_key:
 
           Ensure that the final .txt file contains detailed information, all relevant sources, and citations.
           """,
-                    model="gpt-3.5-turbo-1106",
+                    model="gpt-4o-mini",
                     tools=functions,
                 )
 
