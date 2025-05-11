@@ -13,6 +13,10 @@ import os
 # Set user agent for web scraping
 os.environ["USER_AGENT"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
 
+CACHE_DIR = "temp"
+FILE_DIR = os.path.join(CACHE_DIR, "text_files")
+os.makedirs(FILE_DIR, exist_ok=True)
+
 
 class AssistantEventHandler(AssistantEventHandler):
 
@@ -41,7 +45,7 @@ st.markdown(
     """
     # Research Assistant
 
-    Input your research question and the assistant will provide a summary of the information.
+    Input your research question and the assistant will provide a summary of the information.(테스트를 여러 번해서인지 duckduckgo 검색 차단 당한 것 같음. 실행 시간이 길어지면 차단된 것으로 추정하면 됨.)
     """
 )
 
@@ -76,14 +80,9 @@ def save_to_text(inputs):
     # Create a temporary file
     if not filename.endswith('.txt'):
         filename += '.txt'
-
-    # Create download button
-    st.download_button(
-        label="Download Research Results",
-        data=content,
-        file_name=filename,
-        mime="text/plain"
-    )
+    file_path = os.path.join(FILE_DIR, filename)
+    with open(file_path, 'w', encoding='utf-8') as f:
+        f.write(content)
 
     return f"Content has been prepared for download as {filename}"
 
@@ -278,6 +277,7 @@ if openai_api_key:
           """,
                     model="gpt-4o-mini",
                     tools=functions,
+
                 )
 
         thread = client.beta.threads.create()
