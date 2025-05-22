@@ -247,9 +247,6 @@ def paint_chat_history(thread_id):
 
 
 with st.sidebar:
-    st.markdown(
-        "GitHub: [https://github.com/ejseo87/openai-assistants-2025](https://github.com/ejseo87/openai-assistants-2025)")
-    st.markdown("---")
     openai_api_key = st.text_input("OpenAI API Key", type="password")
 
 ASSISTANT_NAME = "Research Assistant"
